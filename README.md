@@ -29,11 +29,10 @@ Ask in the #eng-core channel in Slack if you need a license and don't have one y
 
 - [3. Start with research](#3-start-with-research)
 - [4. Save design decisions](#4-save-design-decisions)
-- [5. Working with persistent prompts (i.e. TODO.md)](#5-working-with-persistent-prompts-ie-todomd)
-- [6. Ask AI to plan and wait for your approval before writing code](#6-ask-ai-to-plan-and-wait-for-your-approval-before-writing-code)
-- [7. Save plans](#7-save-plans)
-- [8. Save conversations](#8-save-conversations)
-- [9. Capture repeated instructions (i.e. instructions/rules)](#9-capture-repeated-instructions-ie-instructionsrules)
+- [5. Working through a plan in small steps](#5-working-through-a-plan-in-small-steps)
+- [6. Working with persistent prompts (i.e. TODO.md)](#6-working-with-persistent-prompts-ie-todomd)
+- [7. Save conversations](#7-save-conversations)
+- [8. Capture repeated instructions (i.e. instructions/rules)](#8-capture-repeated-instructions-ie-instructionsrules)
 
 ## Introduction
 
@@ -85,12 +84,10 @@ DO NOT start writing any code yet. I just want you to generate the plan and reco
 
 ### 4. Save design decisions
 
-### 5. Working with persistent prompts (i.e. TODO.md)
+### 5. Working through a plan in small steps
 
-### 6. Ask AI to plan and wait for your approval before writing code
+### 6. Working with persistent prompts (i.e. TODO.md)
 
-### 7. Save plans
+### 7. Save conversations
 
-### 8. Save conversations
-
-### 9. Capture repeated instructions (i.e. instructions/rules)
+### 8. Capture repeated instructions (i.e. instructions/rules)
