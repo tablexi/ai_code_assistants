@@ -42,6 +42,16 @@ Ask in the #eng-core channel in Slack if you need a license and don't have one y
 
 ### 2. Caveats
 
+Before we get stuck in, here are some things to keep in mind when working with AI code assistants:
+
+1. AI is ***non-deterministic*** - We’re not all going to get the same results. You won't see the exact same results twice.
+2. Take ***small steps*** - AI can (and will) write whole novels if you let it. Don’t.
+3. If the solution is bad, ***try again*** - Roll the dice and hit that refresh button!
+4. If the solution is very/still bad, ***adjust your prompt*** - Sometimes you’ll realize that the AI needs more/better prompting. Either do so inline so that it has context for what went wrong, or summarize first and then start a new convo from that summary and a new improved prompt.
+5. Beware of ***context bloat*** - The longer the conversation, the slower and worse the results. LLMs can only have full attention within a given context window. Outside of that they will start to lose context and/or misrepresent prior context within that conversation. Keep your conversations short. Summarizing is an important tool in this regard.
+6. Beware of ***error loops or doom cycles*** - Sometimes the code assistant will get stuck, either trying to figure out what it needs to do to complete a task, or flip flopping from one error state to another. Sometimes the best course of action is to stop the conversation, summarize it and then figure out a better approach (better prompt, smaller steps, etc).
+7. Beware of the ***commands Copilot wants to run*** - I’ve never experienced Copilot running commands without asking my permission first. However, I *have* seen it ask to run commands that were either wrong or downright harmful. Always read a command before you run it. You can also change the command first and then run it if you like.
+
 ### 3. Start with research
 
 ### 4. Ask AI to plan and wait for your approval before writing code
