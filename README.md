@@ -72,7 +72,7 @@ In the rest of this workshop we'll take a look at a workflow that we've been exp
 
 Rather than diving in and getting Copilot to start writing code for us, we'll first ask it to come up with a plan of action we can follow. Try the following prompt (or construct one of your own) and have Copilot generate a plan and a recommendation for how we should proceed.
 
-#### Example Prompt
+#### Example prompt
 
 ```markdown
 I need an application that I can use to help me to track my progress towards my goals. I want to be able to add goals by giving them a name, a proposed start date and a frequency for how often I need to make progress (i.e. daily, weekly, on the nth of month). I also want to be able to mark goals as pending, active, completed or abandonned. I'd like to use a web interface on my laptop and an app on my iPhone to access and use the application. Ideally, most of the code would be shared between these two user interfaces so that I don't have so much maintenance to do.
@@ -83,6 +83,29 @@ DO NOT start writing any code yet. I just want you to generate the plan and reco
 ```
 
 ### 4. Save design decisions
+
+As we work with Copliot we may want to save various design decisons we make for later reference or to share out with the rest of our team and the client. Once we've gotten to a high-level plan we're happy with from our previous conversation, lets use the following prompt (or a variation thereof) to save our conversation and the outcome we reached.
+
+#### Example prompt
+
+```markdown
+Summarize our conversation so far using the following format:
+1. A short, single-paragraph description of our final decision.
+2. A detailed description of the agreed plan.
+3. A list of key choices that were made, highlighting whether these align with your recommendations or not. When they do not align, provide the reason that we went away from your recommendation
+
+Provide your response as markdown.
+```
+
+Once we're happy with the output from Copilot, we can ask it to save out the file for us.
+
+> ❗ **NOTE**: remember to switch to Agent mode so that Copilot will write the file for us!
+
+#### Example prompt
+
+```markdown
+Save the final version of the markdown you showed me, without making any changes to it, in the file "docs/decisions/initial_agreed_plan.md".
+```
 
 ### 5. Working through a plan in small steps
 
