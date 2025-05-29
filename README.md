@@ -18,19 +18,26 @@ Ask in the #eng-core channel in Slack if you need a license and don't have one y
 - [ ] [VS Code](https://code.visualstudio.com/docs/setup/setup-overview) (or other editor of choice set up and ready to go)
 - [ ] [Copilot](https://code.visualstudio.com/docs/copilot/setup) (or other code assistant of your choice set up and ready to go)
 
-## Activites
+## Actvities
+
+### Introduction
 
 - [1. Introduction to copilot in VS Code](#1-introduction-to-copilot-in-vs-code)
 - [2. Caveats](#2-caveats)
+
+### Exploring A Workflow
+
 - [3. Start with research](#3-start-with-research)
-- [4. Ask AI to plan and wait for your approval before writing code](#4-ask-ai-to-plan-and-wait-for-your-approval-before-writing-code)
-- [5. Save conversations](#5-save-conversations)
-- [6. Save design decisions](#6-save-design-decisions)
+- [4. Save design decisions](#4-save-design-decisions)
+- [5. Working with persistent prompts (i.e. TODO.md)](#5-working-with-persistent-prompts-ie-todomd)
+- [6. Ask AI to plan and wait for your approval before writing code](#6-ask-ai-to-plan-and-wait-for-your-approval-before-writing-code)
 - [7. Save plans](#7-save-plans)
-- [8. Working with persistent prompts (i.e. TODO.md)](#8-working-with-persistent-prompts-ie-todomd)
+- [8. Save conversations](#8-save-conversations)
 - [9. Capture repeated instructions (i.e. instructions/rules)](#9-capture-repeated-instructions-ie-instructionsrules)
 
-### 1. Introduction to copilot in VS Code
+## Introduction
+
+### 1. Using copilot in VS Code
 
 1. We can open Copilot by opening our secondary side bar on the right hand side of the VS Code editor window. Either click the <!--TODO: add image of button --> button or use the keyboard shortcut (`cmd + opt + b` on Mac).
 2. The chat input window is at the bottom of the panel.
@@ -52,16 +59,38 @@ Before we get stuck in, here are some things to keep in mind when working with A
 6. Beware of ***error loops or doom cycles*** - Sometimes the code assistant will get stuck, either trying to figure out what it needs to do to complete a task, or flip flopping from one error state to another. Sometimes the best course of action is to stop the conversation, summarize it and then figure out a better approach (better prompt, smaller steps, etc).
 7. Beware of the ***commands Copilot wants to run*** - I’ve never experienced Copilot running commands without asking my permission first. However, I *have* seen it ask to run commands that were either wrong or downright harmful. Always read a command before you run it. You can also change the command first and then run it if you like.
 
+## Exploring a Workflow
+
+Copilot is always eager to write code for you. Given a broad or vague enough prompt it can start to build whole apps and infrastructure for you, complete with documentation. We can absolutely take that approach if we want to, but the more we delegate to the LLM, the worse our resulting code and implementation will be. Leaving the design, code and implementation decisions up to the LLM and having it generated everything from scratch, is known as "vibe coding".
+
+Any request to an LLM to generate code and associated materials is essentially a wish. We are not really in control of the output anymore than we would be than if we asked a genie with infinite knowledge of software development to build us an application based on a single wish. We're going to have to word that wish _very_ carefully and comprehensively in order to get what we want.
+
+Luckily, with LLMs we get infinite* wishes (*not really).
+
+In the rest of this workshop we'll take a look at a workflow that we've been experimenting with that gives us much more control (within the context of LLMs being non-deterministic by nature) over how Copilot will assist us to get our work done.
+
 ### 3. Start with research
 
-### 4. Ask AI to plan and wait for your approval before writing code
+Rather than diving in and getting Copilot to start writing code for us, we'll first ask it to come up with a plan of action we can follow. Try the following prompt (or construct one of your own) and have Copilot generate a plan and a recommendation for how we should proceed.
 
-### 5. Save conversations
+#### Example Prompt
 
-### 6. Save design decisions
+```markdown
+I need an application that I can use to help me to track my progress towards my goals. I want to be able to add goals by giving them a name, a proposed start date and a frequency for how often I need to make progress (i.e. daily, weekly, on the nth of month). I also want to be able to mark goals as pending, active, completed or abandonned. I'd like to use a web interface on my laptop and an app on my iPhone to access and use the application. Ideally, most of the code would be shared between these two user interfaces so that I don't have so much maintenance to do.
+
+You are a senior software engineer that I have engaged to help me build this application. I want you to start by coming up with a plan for how think you should tackle this build. List the choices that we have for the tech stack, the deploy stack and any other pertinent information, making clear recommendations for the direction you think we should take. I also want you to list any security considerations alongside any regulatory information I would need in order to use this application in the United Kingdom. I want to deploy this to some kind of cloud or SaaS service so that I don't have to host my own hardware.
+
+DO NOT start writing any code yet. I just want you to generate the plan and recommendations for me. I'll work with you to refine the plan and let you know when I'm ready to move onto next steps.
+```
+
+### 4. Save design decisions
+
+### 5. Working with persistent prompts (i.e. TODO.md)
+
+### 6. Ask AI to plan and wait for your approval before writing code
 
 ### 7. Save plans
 
-### 8. Working with persistent prompts (i.e. TODO.md)
+### 8. Save conversations
 
 ### 9. Capture repeated instructions (i.e. instructions/rules)
