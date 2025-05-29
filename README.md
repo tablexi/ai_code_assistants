@@ -29,9 +29,9 @@ Ask in the #eng-core channel in Slack if you need a license and don't have one y
 
 - [3. Start with research](#3-start-with-research)
 - [4. Save design decisions](#4-save-design-decisions)
-- [5. Working through a plan in small steps](#5-working-through-a-plan-in-small-steps)
-- [6. Working with persistent prompts (i.e. TODO.md)](#6-working-with-persistent-prompts-ie-todomd)
-- [7. Save conversations](#7-save-conversations)
+- [5. Save conversations](#5-save-conversations)
+- [6. Working through a plan in small steps](#6-working-through-a-plan-in-small-steps)
+- [7. Working with persistent prompts (i.e. TODO.md)](#7-working-with-persistent-prompts-ie-todomd)
 - [8. Capture repeated instructions (i.e. instructions/rules)](#8-capture-repeated-instructions-ie-instructionsrules)
 
 ## Introduction
@@ -107,10 +107,34 @@ Once we're happy with the output from Copilot, we can ask it to save out the fil
 Save the final version of the markdown you showed me, without making any changes to it, in the file "docs/decisions/initial_agreed_plan.md".
 ```
 
-### 5. Working through a plan in small steps
+### 5. Save conversations
 
-### 6. Working with persistent prompts (i.e. TODO.md)
+We've been working for a while now in the one conversation (unless you already hit issues and had to skip to this section 😁), let's get a summary of what we've done so far so that we can continue in a new conversation. There are two potential audiences for the summarized and saved conversation: the LLM, so that it has context to continue the conversation or to refer to it later, our team and client, so they have context on how we got to where we got to.
 
-### 7. Save conversations
+So far, I've been experimenting with the following approach, but this is something that a team should agree upon in a way that works best for them.
+
+1. If I want to save a conversation, or part of a conversation, for context around architecture, code decisions, or technical direction, I will store the resulting file in the **docs/decisions** folder.
+2. If I want to use the summary as context for a continuing conversation with the LLM, I will store the file in **docs/prompts** in a file called **CONVO_CONTEXT.md**, overwriting any previous version, and use it as context for starting the next conversation.
+3. If I want to save a whole conversation because it has some utility or useful context I want to share with others on the team, I'll store the resulting file in the **docs/convos** folder. This is intended to be temorary context sharing for handover or discussion and should be able to be regularly pruned to remove anything that has now served its purpose.
+
+We covered option 1 in the previous step, so let's try option 2 first...
+
+Use the following prompt to have the LLM summarize the conversation so far for us.
+
+```markdown
+Add a markdown document to docs/convos with a summary of this conversation. Name the file with the current timestamp, e.g. if it's 11:05:22 on the 1st January 2025 the file should be called 20250101110522.md
+```
+
+Now let's try option 3...
+
+Use the following prompt to have the LLM summarize the conversation so far for us.
+
+```markdown
+Add a markdown document to docs/prompts/CONVO_CONTEXT.md with a summary of this conversation in a way that helps you (the AI) pick up from this point in a new conversation.
+```
+
+### 6. Working through a plan in small steps
+
+### 7. Working with persistent prompts (i.e. TODO.md)
 
 ### 8. Capture repeated instructions (i.e. instructions/rules)
