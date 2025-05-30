@@ -269,4 +269,6 @@ Work through the attached TODO.md list step-by-step using the following workflow
 8. Ask me if I want to proceed to the next step.
 ```
 
-This _should_ be applied any time we include a TODO.md file in our context. However, I've not found this to work reliably. If this doesn't seem to be working for you, we can add it to the context manually instead.
+This _should_ be applied any time we include a TODO.md file in our context. However, I've not found this to work reliably. If this doesn't seem to be working for you, we can add it to the context manually instead. This uses the same approach as adding a file to the context, but selecting the Instructions option instead.
+
+<img src="assets/images/example__add-context__instructions.png" width="500px" />
