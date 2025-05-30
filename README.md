@@ -162,6 +162,22 @@ It is likely that the first pass of this prompt is going to create a very detail
 
 I'll typically use the latter approach if I know what I want to do and the former if I'm not sure or want a starter for ten. Just because we have access to Copilot, doesn't mean that we always have to use it. Often in software development it is not the writing of the code that takes the time, it is the knowing what to write.
 
+Let's try the former approach and be more specific about what we want this time:
+
+#### Example prompt - better
+
+```markdown
+Looking at the plan we agreed, I'd like to start implementing it in a step-by-step approach. Let's start with the React Native front-end.
+
+Build me a todo list in docs/prompts/TODO.md with step-by-step instructions for getting the bare minimum set up to allow us to have a working "Hello, world" version of the app.
+- I only want to set up the essential dependencies for now, we can install others as we need them.
+- Don't implement any features that don't directly contribute to getting "Hello, world" onto the screen.
+
+DO NOT start implementing any items on the todo list until I've had a chance to review it and make any adjustments I'd like to make.
+```
+
+Now we can start a new conversation, add the **docs/prompts/CONVO_CONTEXT.md** file and the **docs/decisions/initial_agreed_plan.md** file to the context, and try out our latest prompt. This _should_ result in a better todo list for us. If not, either continue to tweak the prompt, chat with copilot inline to adjust the todo list, or abandon the conversation with Copilot and just go and edit **docs/prompts/TODO.md** to what you'd like it to be (HINT: there's an example in [example/docs/prompts/TODO.md](./example/docs/prompts/TODO.md) if you'd like inspiration or if you'd like to move on from this step).
+
 ### 7. Working with persistent prompts
 
 Let's assume that one way or another we were able to get to the version of the TODO.md file we can find in the [example/docs/prompts/TODO.md](./example/docs/prompts/TODO.md) file. Copy that file into **docs/prompts/TODO.md** and we'll use that file for the context of our next conversation.
