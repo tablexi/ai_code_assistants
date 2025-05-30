@@ -273,3 +273,18 @@ This _should_ be applied any time we include a TODO.md file in our context. Howe
 <img src="assets/images/example__add-context__instructions.png" width="500px" />
 
 Now you should be able to start a new conversation, add the **docs/prompts/TODO.md** file as context and use a simple prompt like "Let's tackle the next item on our todo list" to start working through the todos.
+
+## Bonus Content
+
+Sometimes I like to snapshot a conversation, either to pass it on as context to the team I'm working with or so that I can debug/analyse/remember a conversation I've had. See the image below for an example of me doing this. There's also an example of a saved conversation in [example/docs/convos/20250529121823.md](./example/docs/convos/20250529121823.md).
+
+<img src="./assets/images/example__tools__unix-tools.png" width="500px" />
+
+I've taken to using an instruction for simplicity called "save_convo.instructions.md" with the following content:
+
+```markdown
+<!-- NOTE: we don't use applyTo here because we want to manually control when we use this instruction. -->
+
+- Add a markdown document to docs/convo with a summary of this conversation.
+- Name the file with the current timestamp, e.g. if it's 11:05:22 on the 1st January 2025 the file should be called 20250101110522.md
+```
