@@ -5,18 +5,21 @@ This repo was used during the AI Code Assistants workshop at the [Engineering Me
 ## FAQS
 
 **Can I use Cursor/ Claude Code / another tool instead?**
-Other coding assistants such as Cursor or Claude Code can be used in a similar way to Copilot, but there are some differences that you'd need to figure out for yourself as you followed along.
 
-**I don't use VS Code or related IDE, can I use X instead?**
-Theoretically, yes although, depending on what you're using instead, you might not have access to all of the features we'll be discussing. Feel free to follow along using your editor and code assistant of choice though.
+Other coding assistants such as Cursor or Claude Code can be used in a similar way to Copilot, but you may need to figure your way around some differences as you follow along.
+
+**I don't use VS Code or related IDE, can I use \<insert editor\> instead?**
+
+Theoretically yes, although depending on what you're using instead you might not have access to all of the features we'll be discussing. Feel free to follow along using your editor and code assistant of choice though.
 
 **I don't have a Copilot license, how do I get one?**
+
 Ask in the #eng-core channel in Slack if you need a license and don't have one yet.
 
 ## Prerequisites
 
-- [ ] [VS Code](https://code.visualstudio.com/docs/setup/setup-overview) (or other editor of choice set up and ready to go)
-- [ ] [Copilot](https://code.visualstudio.com/docs/copilot/setup) (or other code assistant of your choice set up and ready to go)
+- [VS Code](https://code.visualstudio.com/docs/setup/setup-overview) (or other editor of choice set up and ready to go)
+- [Copilot](https://code.visualstudio.com/docs/copilot/setup) (or other code assistant of your choice set up and ready to go)
 
 ## Actvities
 
@@ -29,7 +32,7 @@ Ask in the #eng-core channel in Slack if you need a license and don't have one y
 
 - [3. Start with research](#3-start-with-research)
 - [4. Save design decisions](#4-save-design-decisions)
-- [5. Save conversations](#5-save-conversations)
+- [5. Save and continue conversations](#5-save-and-continue-conversations)
 - [6. Working through a plan in small steps](#6-working-through-a-plan-in-small-steps)
 - [7. Working with persistent prompts (i.e. TODO.md)](#7-working-with-persistent-prompts-ie-todomd)
 - [8. Capture repeated workflows in instructions](#8-capture-repeated-workflows-in-instructions)
@@ -38,13 +41,16 @@ Ask in the #eng-core channel in Slack if you need a license and don't have one y
 
 ### 1. Using copilot in VS Code
 
-1. We can open Copilot by opening our secondary side bar on the right hand side of the VS Code editor window. Either click the <!--TODO: add image of button --> button or use the keyboard shortcut (`cmd + opt + b` on Mac).
+1. We can open Copilot by opening our secondary side bar on the right hand side of the VS Code editor window. Either click the <img src="assets/images/button__copilot__open-panel.png" /> button or use the keyboard shortcut (`cmd + opt + b` on Mac).
 2. The chat input window is at the bottom of the panel.
+
+    <img src="assets/images/chat-window.png" width="500px" />
+
 3. At the bottom right of the chat input we have the option to select the mode and the model we want to use.
   a. If we want Copilot to just answer a question and not to write or change code, we use ***Ask mode***.
   b. If we want Copilot to write or change code, we use ***Agent mode***. This provides Copilot with the ability to inspect our codebase too, and we can specifically drawn its attention to certain pieces of context too, which we'll get to in a bit.
-  c. We'll use `Claude 3.7 Sonnet` for this workshop as Claude models are usually better at coding that GPT models. Feel free to experiment though. We could also use `Claude Sonnet 4`, which may well give us better results, but we should avoid the "thinking" version outside of generating plans and answers that don't generate code as it's slower.
-4. At the top left of the window is the selector that lets us specifically add context to our prompts. Agent mode _should_ read through our codebase for the information it needs anyway, so we don't always have to explicitly add all pertinent files. We'll cover this in more detail as we go. The current file that is opened and focused in our editor is always auto-selected.
+  c. We'll use `Claude 3.7 Sonnet` for this workshop as Claude models are usually better at coding that GPT models. Feel free to experiment though. We could also use `Claude Sonnet 4`, which may well give us better results, but we should avoid the "thinking" version outside of research or generating plans as it's slower (and in fact we can't select it when in Agent mode anyway).
+4. At the top left of the window is the selector that lets us specifically add context to our prompts. Agent mode will read through our codebase for the information it needs anyway, so we don't always have to explicitly add all pertinent files. We'll cover this in more detail as we go. The current file that is opened and focused in our editor is always auto-selected.
 
 ### 2. Caveats
 
@@ -60,31 +66,41 @@ Before we get stuck in, here are some things to keep in mind when working with A
 
 ## Exploring a Workflow
 
-Copilot is always eager to write code for you. Given a broad or vague enough prompt it can start to build whole apps and infrastructure for you, complete with documentation. We can absolutely take that approach if we want to, but the more we delegate to the LLM, the worse our resulting code and implementation will be. Leaving the design, code and implementation decisions up to the LLM and having it generated everything from scratch, is known as "vibe coding".
+Copilot is always eager to write code for you. Given a broad or vague enough prompt it can start to build whole apps and infrastructure, complete with documentation. We can absolutely take that approach if we want to, but the more we delegate to the LLM, the worse our resulting code and implementation will be. Leaving the design, code and implementation decisions up to the LLM and having it generated everything from scratch, is known as "vibe coding".
 
 Any request to an LLM to generate code and associated materials is essentially a wish. We are not really in control of the output anymore than we would be than if we asked a genie with infinite knowledge of software development to build us an application based on a single wish. We're going to have to word that wish _very_ carefully and comprehensively in order to get what we want.
 
 Luckily, with LLMs we get infinite* wishes (*not really).
 
-In the rest of this workshop we'll take a look at a workflow that we've been experimenting with that gives us much more control (within the context of LLMs being non-deterministic by nature) over how Copilot will assist us to get our work done.
+In the rest of this workshop we'll take a look at a workflow that we've been experimenting with that gives us much more control (within the context of LLMs being non-deterministic by nature) over how Copilot will assist us to get our work done. This approach is increasingly being referred to as ChOP - Chat Oriented Programming. It differs from vibe coding in that we'll be working with the LLM to take small steps and iterate our we towards a solution. We'll review everything that the LLM generates from code to commands it wants to run, rather than trusting it to generate entirely what we need without oversight.
 
 ### 3. Start with research
 
-Rather than diving in and getting Copilot to start writing code for us, we'll first ask it to come up with a plan of action we can follow. Try the following prompt (or construct one of your own) and have Copilot generate a plan and a recommendation for how we should proceed.
+Rather than diving in and getting Copilot to start writing code for us, we'll first ask it to come up with a plan of action we can follow. Try the following prompt (or construct one of your own) and have Copilot generate a plan and a recommendation for how we should proceed. For now, we should use **Ask** mode because we're just having a conversation just now.
 
 #### Example prompt
 
 ```markdown
-I need an application that I can use to help me to track my progress towards my goals. I want to be able to add goals by giving them a name, a proposed start date and a frequency for how often I need to make progress (i.e. daily, weekly, on the nth of month). I also want to be able to mark goals as pending, active, completed or abandonned. I'd like to use a web interface on my laptop and an app on my iPhone to access and use the application. Ideally, most of the code would be shared between these two user interfaces so that I don't have so much maintenance to do.
+I need an application that I can use to help me to track my progress towards my goals. I want to be able to add goals by giving them a name, a proposed start date and a frequency for how often I need to make progress (i.e. daily, weekly, on the nth of month). I also want to be able to mark goals as pending, active, completed or abandoned. I'd like to use a web interface on my laptop and an app on my iPhone to access and use the application. Ideally, most of the code would be shared between these two user interfaces so that I don't have so much maintenance to do.
 
-You are a senior software engineer that I have engaged to help me build this application. I want you to start by coming up with a plan for how think you should tackle this build. List the choices that we have for the tech stack, the deploy stack and any other pertinent information, making clear recommendations for the direction you think we should take. I also want you to list any security considerations alongside any regulatory information I would need in order to use this application in the United Kingdom. I want to deploy this to some kind of cloud or SaaS service so that I don't have to host my own hardware.
+You are a senior software engineer that I have engaged to help me build this application. I want you to start by coming up with a plan for how you intend to tackle this build. List the choices that we have for the tech stack, the deploy stack and any other pertinent information, making clear recommendations for the direction you think we should take. I also want you to list any security considerations alongside any regulatory information I would need in order to use this application in the United States. I want to deploy this to some kind of cloud or SaaS service so that I don't have to host my own hardware.
+
+Ask me any clarifying questions you have before starting building the plan.
 
 DO NOT start writing any code yet. I just want you to generate the plan and recommendations for me. I'll work with you to refine the plan and let you know when I'm ready to move onto next steps.
 ```
 
+#### Main quest
+
+After Copilot makes a plan, continue the conversation to answer any questions it has for you, explore any of its recommendations and request it make changes as you see fit.
+
+#### Side quests
+
+If you want to explore this a little more, try switching to **Agent** mode and see if there's a difference in the output. What if you use a different model like `3.7 Sonnet Thinking` or `Sonnet 4`?
+
 ### 4. Save design decisions
 
-As we work with Copliot we may want to save various design decisons we make for later reference or to share out with the rest of our team and the client. Once we've gotten to a high-level plan we're happy with from our previous conversation, lets use the following prompt (or a variation thereof) to save our conversation and the outcome we reached.
+As we work with Copliot we may want to save various design decisons we make for later reference or to share out with the rest of our team and/or the client. Once we have a high-level plan we're happy with, let's use the following prompt (or a variation thereof) to save our conversation and the outcome we reached.
 
 #### Example prompt
 
@@ -107,25 +123,9 @@ Once we're happy with the output from Copilot, we can ask it to save out the fil
 Save the final version of the markdown you showed me, without making any changes to it, in the file "docs/decisions/initial_agreed_plan.md".
 ```
 
-### 5. Save conversations
+### 5. Save and continue conversations
 
-We've been working for a while now in the one conversation (unless you already hit issues and had to skip to this section 😁), let's get a summary of what we've done so far so that we can continue in a new conversation. There are two potential audiences for the summarized and saved conversation: the LLM, so that it has context to continue the conversation or to refer to it later, our team and client, so they have context on how we got to where we got to.
-
-So far, I've been experimenting with the following approach, but this is something that a team should agree upon in a way that works best for them.
-
-1. If I want to save a conversation, or part of a conversation, for context around architecture, code decisions, or technical direction, I will store the resulting file in the **docs/decisions** folder.
-2. If I want to use the summary as context for a continuing conversation with the LLM, I will store the file in **docs/prompts** in a file called **CONVO_CONTEXT.md**, overwriting any previous version, and use it as context for starting the next conversation.
-3. If I want to save a whole conversation because it has some utility or useful context I want to share with others on the team, I'll store the resulting file in the **docs/convos** folder. This is intended to be temorary context sharing for handover or discussion and should be able to be regularly pruned to remove anything that has now served its purpose.
-
-We covered option 1 in the previous step, so let's try option 2 first...
-
-Use the following prompt to have the LLM summarize the conversation so far for us.
-
-```markdown
-Add a markdown document to docs/convos with a summary of this conversation. Name the file with the current timestamp, e.g. if it's 11:05:22 on the 1st January 2025 the file should be called 20250101110522.md
-```
-
-Now let's try option 3...
+We've been working for a while now in the one conversation, let's get a summary of what we've done so far so that we can continue the conversation in a new chat. We do this so that the LLM has the context it needs to continue the conversation because chats don't have automatic access to other chats you've had.
 
 Use the following prompt to have the LLM summarize the conversation so far for us.
 
@@ -135,16 +135,21 @@ Add a markdown document to docs/prompts/CONVO_CONTEXT.md with a summary of this 
 
 ### 6. Working through a plan in small steps
 
-Now we can use our CONVO_CONTEXT.md as starting context for our next conversation with Copilot.
+Now we can use our **CONVO_CONTEXT.md** as starting context for our next conversation with Copilot.
 
-Our plan as it stands is too high level. We need something that we can use to help us start building. Start a new conversation using the **New Conversation** <!-- TODO: add button image --> button in the top right of the Copilot panel.
+Our plan as it stands is too high level. We need something that we can use to help us start building. Start a new conversation using the **New Conversation** <img src="assets/images/button__copilot__new-convo.png" /> button in the top right of the Copilot panel.
 
 Let's open the plan we stored in **docs/decisions/initial_agreed_plan.md** so we can use it as our current file context. If you don't have a version of this file yourself, you can copy the one from [example/docs/decisions/initial_agreed_plan.md](./example/docs/decisions/initial_agreed_plan.md).
 
-Now let's add the saved summary from our previous conversation as additional context. We can add specific context we want the LLM to use in a conversation using the **Add Context** button <!-- TODO: add button image --> in the top left of the Copilot chat input.
+Now let's add the saved summary from our previous conversation as additional context. We can add specific context we want the LLM to use in a conversation using the **Add Context** button in the top left of the Copilot chat input.
+
+<img src="assets/images/example__add-context__chat-input.png" width="500px" />
+
 Find **docs/prompts/CONVO_CONTEXT.md** or copy [example/docs/prompts/CONVO_CONTEXT.md](./example/docs/prompts/CONVO_CONTEXT.md) and use that.
 
-> ❗**NOTE**: if you're swapping back to this README file to view the instructions as you're working with Copilot, this file will become the current file in our context rather than the plan. Copilot will likely find the plan on its own anyway, but to be on the safe side you could manually add the plan to the context using the same method you used to add the CONVO_CONTEXT.md file. There are no side effects that I'm aware of if you include the same file twice in the context.
+<img src="assets/images/example__add-context_selector.png" width="500px" />
+
+> ❗**NOTE**: if you're swapping back to this README file to view the instructions as you're working with Copilot, this file will become the current file in our context rather than the plan file. Copilot will likely find the plan on its own anyway, but to be on the safe side you could manually add the plan to the context using the same method you used to add the CONVO_CONTEXT.md file. There are no side effects that I'm aware of if you include the same file twice in the context.
 
 Now we can use a prompt like the following to have Copilot build a step-by-step plan for the first feature from our plan we want to work on.
 
@@ -156,15 +161,21 @@ Looking at the plan we agreed, I'd like to start implementing it in a step-by-st
 DO NOT start implementing the plan until I've had a chance to review it and make any adjustments I'd like to make.
 ```
 
-It is likely that the first pass of this prompt is going to create a very detailed and long todo list that is going to suggest we build too much. It is our job as engineers at this point to figure out what to do next. Usually at this point I will take one of the following approaches:
+It is likely that the first pass of this prompt is going to create a very detailed and long todo list that is going to suggest we build too much. It is our job as engineers at this point to figure out what to do next. Usually, I will take one of the following approaches:
 1. Adjust my prompt so that it more specifically asks for what I'm looking for.
-2. Abandon the LLM and write my own TODO.md file.
+2. Abandon chatting with the LLM and just write my own TODO.md file.
 
-I'll typically use the latter approach if I know what I want to do and the former if I'm not sure or want a starter for ten. Just because we have access to Copilot, doesn't mean that we always have to use it. Often in software development it is not the writing of the code that takes the time, it is the knowing what to write.
+I'll typically use the latter approach if I know what I want to do and the former if I'm not sure or want a starter-for-ten. Just because we have access to Copilot, doesn't mean that we always have to use it.
 
-Let's try the former approach and be more specific about what we want this time:
+> ❗ Remember, often in software development it is not the writing of the code that takes the time, it is the knowing what to write. It's absolutely fine to have Copilot suggest an approach and we then code it out ourselves.
+
+You can take a look at the [initial TODO.md](./example/docs/prompts/TODO_bad.md) file that Copilot generated. It does _way_ too much and does things like installing dependencies we don't need yet that are not good practice.
+
+Let's try reprompting the LLM, but be more specific about what we want this time.
 
 #### Example prompt - better
+
+We should start a new conversation, add the **docs/prompts/CONVO_CONTEXT.md** file and the **docs/decisions/initial_agreed_plan.md** file to the context, and try out the prompt below.
 
 ```markdown
 Looking at the plan we agreed, I'd like to start implementing it in a step-by-step approach. Let's start with the React Native front-end.
@@ -176,7 +187,9 @@ Build me a todo list in docs/prompts/TODO.md with step-by-step instructions for 
 DO NOT start implementing any items on the todo list until I've had a chance to review it and make any adjustments I'd like to make.
 ```
 
-Now we can start a new conversation, add the **docs/prompts/CONVO_CONTEXT.md** file and the **docs/decisions/initial_agreed_plan.md** file to the context, and try out our latest prompt. This _should_ result in a better todo list for us. If not, either continue to tweak the prompt, chat with copilot inline to adjust the todo list, or abandon the conversation with Copilot and just go and edit **docs/prompts/TODO.md** to what you'd like it to be (HINT: there's an example in [example/docs/prompts/TODO.md](./example/docs/prompts/TODO.md) if you'd like inspiration or if you'd like to move on from this step).
+This _should_ result in a better todo list for us. If not, either continue to tweak the prompt, chat with copilot inline to adjust the todo list, or abandon the conversation with Copilot and just go and edit **docs/prompts/TODO.md** to what you'd like it to be.
+
+When I tried this I got a [better TODO.md](./example/docs/prompts/TODO_ok.md) file, but I still tweaked it to get to a [TODO.md file I was happy to proceed with](./example/docs/prompts/TODO.md).
 
 ### 7. Working with persistent prompts
 
