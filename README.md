@@ -32,7 +32,7 @@ Ask in the #eng-core channel in Slack if you need a license and don't have one y
 - [5. Save conversations](#5-save-conversations)
 - [6. Working through a plan in small steps](#6-working-through-a-plan-in-small-steps)
 - [7. Working with persistent prompts (i.e. TODO.md)](#7-working-with-persistent-prompts-ie-todomd)
-- [8. Capture repeated instructions (i.e. instructions/rules)](#8-capture-repeated-instructions-ie-instructionsrules)
+- [8. Capture repeated workflows in instructions](#8-capture-repeated-workflows-in-instructions)
 
 ## Introduction
 
@@ -206,4 +206,8 @@ Work through the attached TODO.md list step-by-step using the following workflow
 7. If I say that it is, check off that step in the TODO list and ask me if I want to commit the changes to git.
 8. Ask me if I want to proceed to the next step.
 ```
+
+### 8. Capture repeated workflows in instructions
+
+Typing in this prompt each time is a pain, so why don't we just save it in **docs/prompts** and use it as context? Well that's certainly an option and it would work. However, there is a built in way in Copilot that let's us do this and even specify when this particular set of instructions should be included in the prompt. This feature _just_ got introduced recently though and a little flakey right now. Cursor was the first tool (as far as I'm aware) that introduced this feature. They call them **rules** and they are much more reliable that Copilot's current implementation (for me at least), which are called **instructions**.
 
