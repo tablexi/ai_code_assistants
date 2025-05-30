@@ -162,3 +162,32 @@ It is likely that the first pass of this prompt is going to create a very detail
 
 I'll typically use the latter approach if I know what I want to do and the former if I'm not sure or want a starter for ten. Just because we have access to Copilot, doesn't mean that we always have to use it. Often in software development it is not the writing of the code that takes the time, it is the knowing what to write.
 
+### 7. Working with persistent prompts
+
+Let's assume that one way or another we were able to get to the version of the TODO.md file we can find in the [example/docs/prompts/TODO.md](./example/docs/prompts/TODO.md) file. Copy that file into **docs/prompts/TODO.md** and we'll use that file for the context of our next conversation.
+
+This time there is no need to save the context of the current conversation. We want to start from scratch using only our TODO.md file as our context. In this instance, we want the TODO.md file to act as a "persistent prompt" or as a kind of system prompt. Our actual prompt to Copilot will be minimal. There are a couple of benefits to this:
+1. We don't have to keep coming up with prompts to figure out what to build next.
+2. The LLM has the context of all of the steps we want to build, not just our current step.
+3. We can commit the TODO.md file to version control so that our team mates know what we worked on and how far we got.
+4. Our team mates can also pick up from where we left off with the same prompts and context.
+
+Add the **docs/prompts/TODO.md** file to your context and then try using the following prompt.
+
+> ❗**NOTE**: I've had mixed success with this prompt in VS Code with Copilot. Cursor has been _way_ more consistent. If you're struggling to get it to do what this prompt says, experiment with changing the prompt to see if something else works better.
+
+#### Example prompt
+
+```markdown
+Work through the attached TODO.md list step-by-step using the following workflow:
+
+1. Find the next unchecked item in the TODO list.
+2. Present me with a plan for how you intend to implement it but do not start implementing until I have confirmed your approach.
+3. If I ask for any changes, adjust the plan only insofar as it addresses the changes I ask for. Do not make any other changes.
+4. Once I have confirmed the plan, carry out the implementation following all instructions that apply.
+5. If any changes need to be made to the project's README file, present them to me for review and only make those changes if/when I confirm them.
+6. Ask me if the step is now complete.
+7. If I say that it is, check off that step in the TODO list and ask me if I want to commit the changes to git.
+8. Ask me if I want to proceed to the next step.
+```
+
