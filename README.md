@@ -193,13 +193,15 @@ When I tried this I got a [better TODO.md](./example/docs/prompts/TODO_ok.md) fi
 
 ### 7. Working with persistent prompts
 
-Let's assume that one way or another we were able to get to the version of the TODO.md file we can find in the [example/docs/prompts/TODO.md](./example/docs/prompts/TODO.md) file. Copy that file into **docs/prompts/TODO.md** and we'll use that file for the context of our next conversation.
+Now that we have a TODO.md file to work with we can work off of that file going forwards.
 
-This time there is no need to save the context of the current conversation. We want to start from scratch using only our TODO.md file as our context. In this instance, we want the TODO.md file to act as a "persistent prompt" or as a kind of system prompt. Our actual prompt to Copilot will be minimal. There are a couple of benefits to this:
+If we didn't end up with a TODO.md file we were happy with at the end of the last step, we can use the one in the [example/docs/prompts/TODO.md](./example/docs/prompts/TODO.md) file. Copy that file into **docs/prompts/TODO.md** to use that file for the context of our next conversation.
+
+This time there is no need to save the context of the current conversation. We want to start from scratch using only our TODO.md file as our context. In this instance, we want the TODO.md file to act as a "persistent prompt". The actual prompt to Copilot will end up being quite minimal. There are a couple of benefits to this:
 1. We don't have to keep coming up with prompts to figure out what to build next.
 2. The LLM has the context of all of the steps we want to build, not just our current step.
-3. We can commit the TODO.md file to version control so that our team mates know what we worked on and how far we got.
-4. Our team mates can also pick up from where we left off with the same prompts and context.
+3. We can commit the TODO.md file to version control so that our teammates know what we worked on and how far we got.
+4. Our teammates can also pick up from where we left off with the same prompts and context.
 
 Add the **docs/prompts/TODO.md** file to your context and then try using the following prompt.
 
@@ -220,7 +222,51 @@ Work through the attached TODO.md list step-by-step using the following workflow
 8. Ask me if I want to proceed to the next step.
 ```
 
+Note, that this isn't the "minimal" prompt we discussed earlier. We'll get to that shortly in the next step.
+
 ### 8. Capture repeated workflows in instructions
 
-Typing in this prompt each time is a pain, so why don't we just save it in **docs/prompts** and use it as context? Well that's certainly an option and it would work. However, there is a built in way in Copilot that let's us do this and even specify when this particular set of instructions should be included in the prompt. This feature _just_ got introduced recently though and a little flakey right now. Cursor was the first tool (as far as I'm aware) that introduced this feature. They call them **rules** and they are much more reliable that Copilot's current implementation (for me at least), which are called **instructions**.
+Typing in this prompt each time is a pain, so why don't we just save it in **docs/prompts** and use it as more context? Well that's certainly an option and it would work. However, there is a built in way in Copilot that let's us do this and even specify when this particular prompt should be included as context. This feature _just_ got introduced recently though and a little flakey right now. Cursor was the first tool (as far as I'm aware) that introduced this feature. Cursor calls them **rules** and they are much more reliable that Copilot's current implementation (for me at least), which are called **instructions**.
 
+Instructions are special files with the extension `.instructions.md`. They are mostly normal Markdown files, but they can have optional lines of frontmatter that provide options to Copilot. There are two types of instructions: user and project. User instructions are available only to you, but across all of your projects. Project instructions are available to anyone in the project (assuming you version control them), but only within the project where they are defined. We'll just look at project instructions here.
+
+To see how instructions work, let's start with a simple example that we can obviously see working in Copilot:
+
+1. Add a file called silly.instructions.md to the [.github/instructions](./.github/instructions) folder
+2. Add the following markdown to that file and then save it
+
+  ```markdown
+  ---
+  applyTo: '**'
+  ---
+
+  Before every response to me, you must include the following text:
+
+  "I am a silly assistant."
+  ```
+3. Start a new conversation and ask a question like "How can I get the current time in my terminal?".
+
+Copilot should included "I am a silly assistant" at the top of its response. In the chat input we should see that the instruction has been automatically added to our context.
+
+The section between the `---` is the frontmatter. The only frontmatter we have in here for now (and the only frontmatter option I've used so far) is the `applyTo` option. This contains a file glob that Copilot will use to determine when to use the instruction. In this example, we used the glob `'**'`, meaning that Copilot should _always_ automatically add this to the prompt.
+
+The prompt that we've been using can also be added in an instruction file. Add the following markdown to new instruction file:
+
+```markdown
+---
+applyTo: '**/TODO.md'
+---
+
+Work through the attached TODO.md list step-by-step using the following workflow:
+
+1. Find the next unchecked item in the TODO list.
+2. Present me with a plan for how you intend to implement it but do not start implementing until I have confirmed your approach.
+3. If I ask for any changes, adjust the plan only insofar as it addresses the changes I ask for. Do not make any other changes.
+4. Once I have confirmed the plan, carry out the implementation following all instructions that apply.
+5. If any changes need to be made to the project's README file, present them to me for review and only make those changes if/when I confirm them.
+6. Ask me if the step is now complete.
+7. If I say that it is, check off that step in the TODO list and ask me if I want to commit the changes to git.
+8. Ask me if I want to proceed to the next step.
+```
+
+This _should_ be applied any time we include a TODO.md file in our context. However, I've not found this to work reliably. If this doesn't seem to be working for you, we can add it to the context manually instead.
