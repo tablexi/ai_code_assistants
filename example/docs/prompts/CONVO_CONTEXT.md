@@ -18,7 +18,7 @@ We've established the following architecture:
 2. **Backend**: FastAPI (Python)
    - Selected over Node.js to support future data processing needs
    - Benefits from Python's data science ecosystem
-   - Will be deployed on Fly.io
+   - Will be deployed on
 
 3. **Database & Authentication**: Supabase
    - PostgreSQL database with built-in authentication

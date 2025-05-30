@@ -135,6 +135,30 @@ Add a markdown document to docs/prompts/CONVO_CONTEXT.md with a summary of this 
 
 ### 6. Working through a plan in small steps
 
-### 7. Working with persistent prompts (i.e. TODO.md)
+Now we can use our CONVO_CONTEXT.md as starting context for our next conversation with Copilot.
 
-### 8. Capture repeated instructions (i.e. instructions/rules)
+Our plan as it stands is too high level. We need something that we can use to help us start building. Start a new conversation using the **New Conversation** <!-- TODO: add button image --> button in the top right of the Copilot panel.
+
+Let's open the plan we stored in **docs/decisions/initial_agreed_plan.md** so we can use it as our current file context. If you don't have a version of this file yourself, you can copy the one from [example/docs/decisions/initial_agreed_plan.md](./example/docs/decisions/initial_agreed_plan.md).
+
+Now let's add the saved summary from our previous conversation as additional context. We can add specific context we want the LLM to use in a conversation using the **Add Context** button <!-- TODO: add button image --> in the top left of the Copilot chat input.
+Find **docs/prompts/CONVO_CONTEXT.md** or copy [example/docs/prompts/CONVO_CONTEXT.md](./example/docs/prompts/CONVO_CONTEXT.md) and use that.
+
+> ❗**NOTE**: if you're swapping back to this README file to view the instructions as you're working with Copilot, this file will become the current file in our context rather than the plan. Copilot will likely find the plan on its own anyway, but to be on the safe side you could manually add the plan to the context using the same method you used to add the CONVO_CONTEXT.md file. There are no side effects that I'm aware of if you include the same file twice in the context.
+
+Now we can use a prompt like the following to have Copilot build a step-by-step plan for the first feature from our plan we want to work on.
+
+#### Example prompt
+
+```markdown
+Looking at the plan we agreed, I'd like to start implementing it in a step-by-step approach. Let's start with the React Native front-end. Build me a todo list in docs/prompts/TODO.md with step-by-step instructions for getting set up.
+
+DO NOT start implementing the plan until I've had a chance to review it and make any adjustments I'd like to make.
+```
+
+It is likely that the first pass of this prompt is going to create a very detailed and long todo list that is going to suggest we build too much. It is our job as engineers at this point to figure out what to do next. Usually at this point I will take one of the following approaches:
+1. Adjust my prompt so that it more specifically asks for what I'm looking for.
+2. Abandon the LLM and write my own TODO.md file.
+
+I'll typically use the latter approach if I know what I want to do and the former if I'm not sure or want a starter for ten. Just because we have access to Copilot, doesn't mean that we always have to use it. Often in software development it is not the writing of the code that takes the time, it is the knowing what to write.
+
