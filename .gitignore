@@ -1,0 +1,3 @@
+# Don't commit files into folder people will use for their own prompts etc.
+docs
+!docs/**/.keep
