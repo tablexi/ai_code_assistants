@@ -1,6 +1,6 @@
 # AI Code Assistants
 
-This repo was used during the AI Code Assistants workshop at the [Engineering Meetup on May 30th, 2025](TODO://link_to_recording). The purpose is to walk us through the use of Copilot in VS Code.
+This repo was used during the AI Code Assistants workshop at the [Engineering Meetup on May 30th, 2025](https://www.notion.so/txi/Coding-Assistants-1ee0ea82ab9b80d296d3d978049b8190?source=copy_link) (note: this is an internal link). The purpose is to walk us through the use of Copilot in VS Code.
 
 ## FAQS
 
